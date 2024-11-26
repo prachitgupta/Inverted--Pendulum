@@ -209,8 +209,8 @@ void Timer0IntHandler(void) {
     float X_dot[2] = {x_dot, theta_dot};
     
     // Use the Inverted_Pendulum2ode function to calculate accelerations (dxdt)
-    float dxdt[2];
-    Inverted_Pendulum2ode(X, X_dot, u0, M, m, g, l, c, b, I, dxdt);
+    // float dxdt[2];
+    // Inverted_Pendulum2ode(X, X_dot, u0, M, m, g, l, c, b, I, dxdt);
 
     // // Extract accelerations (x_ddot, theta_ddot)
     // float x_ddot = dxdt[0];
@@ -218,7 +218,7 @@ void Timer0IntHandler(void) {
 
     // Energy-based swing-up control
     float E = m * g * l * (1 - cos(theta)) + (0.5) * (I + m * l * l) * (theta_dot * theta_dot);
-    float Er = 0.0; // Reference energy, could be tuned based on the system
+    float Er = 2*m*g*l; // Reference energy, could be tuned based on the system
     float accel = 2 * (E - Er) * sign(theta_dot * cos(theta));
     accel = k_swing * g * sat(accel, n * g, -n * g);  // Swing-up control
 
